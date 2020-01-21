@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "projects": {
+    "mfe-poc": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "styl"
+        }
+      },
+      "root": "apps/mfe-poc",
+      "sourceRoot": "apps/mfe-poc/src",
+      "prefix": "mfe-poc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/mfe-poc",
+            "index": "apps/mfe-poc/src/index.html",
+            "main": "apps/mfe-poc/src/main.ts",
+            "polyfills": "apps/mfe-poc/src/polyfills.ts",
+            "tsConfig": "apps/mfe-poc/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/mfe-poc/src/favicon.ico",
+              "apps/mfe-poc/src/assets"
+            ],
+            "styles": ["apps/mfe-poc/src/styles.styl"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mfe-poc/src/environments/environment.ts",
+                  "with": "apps/mfe-poc/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "mfe-poc:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "mfe-poc:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "mfe-poc:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/mfe-poc/tsconfig.app.json",
+              "apps/mfe-poc/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/mfe-poc/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/mfe-poc/jest.config.js",
+            "tsConfig": "apps/mfe-poc/tsconfig.spec.json",
+            "setupFile": "apps/mfe-poc/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "mfe-poc-e2e": {
+      "root": "apps/mfe-poc-e2e",
+      "sourceRoot": "apps/mfe-poc-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/mfe-poc-e2e/cypress.json",
+            "tsConfig": "apps/mfe-poc-e2e/tsconfig.e2e.json",
+            "devServerTarget": "mfe-poc:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mfe-poc:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/mfe-poc-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/mfe-poc-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "mfe-poc"
+}

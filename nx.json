@@ -1,0 +1,21 @@
+{
+  "npmScope": "mfe-poc",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "mfe-poc-e2e": {
+      "tags": []
+    },
+    "mfe-poc": {
+      "tags": []
+    }
+  }
+}
